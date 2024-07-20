@@ -16,7 +16,7 @@ Date
 Time
 Payment
 
-# MySQL Queries 👇🏻
+# MySQL Queries (Basics + Advanced)👇🏻
 
 ## 1. Total Sales by Branch
 This query calculates the total sales for each branch.
