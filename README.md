@@ -1,5 +1,12 @@
 # Analyzing Supermarket Sales using MySQL 👩🏻‍💻
 
+# Introduction
+
+This project involved an in-depth analysis of sales data from a retail company. The dataset included various attributes such as Invoice ID, Branch, City, Customer type, Gender, Product line, Unit price, Quantity, Tax, Total, Date, Time, Payment method, cost of goods sold (COGS), gross margin percentage, gross income, and customer rating. Our objective was to derive meaningful insights that could help strategic decision-making and enhance business performance.
+
+# Dataset 🔡
+[Download dataset from kaggle](https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales)
+
 The dataset contains the following columns:
 
 1. Invoice ID
@@ -189,7 +196,7 @@ This query analyzes sales performance by different times of the day.
     SELECT 
         CASE
             WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 0 AND 5 THEN 'Midnight - 6 AM'
-            WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 6 AND 11 THEN '6 AM - Noon'
+            WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 6 AND 11 THEN '6 AM-Noon'
             WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 12 AND 17 THEN 'Noon - 6 PM'
             ELSE '6 PM - Midnight'
         END AS Time_Period,
@@ -212,123 +219,6 @@ This query tracks sales trends over time based on gender.
 
 ![18](https://github.com/user-attachments/assets/c31da5cb-4315-4a8a-87ee-9e78d641f5ad)
 
+# Conclusion 🔚
 
-## Complete Script 
-
-    use supermarket_sales;
-    
-    SELECT Branch, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Branch;
-    
-    SELECT `Product line`, AVG(Rating) AS Average_Rating
-    FROM data
-    GROUP BY `Product line`;
-    
-    SELECT Payment, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Payment;
-    
-    SELECT City, `Customer type`, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY City, `Customer type`;
-    
-    SELECT `Product line`, SUM(Quantity) AS Total_Quantity
-    FROM data
-    GROUP BY `Product line`;
-    
-    SELECT DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') AS Month, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Month;
-    
-    SELECT City, AVG(`gross income`) AS Average_Gross_Income
-    FROM data
-    GROUP BY City;
-    
-    SELECT Gender, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Gender;
-    
-    SELECT `Product line`, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY `Product line`
-    ORDER BY Total_Sales DESC
-    LIMIT 5;
-    
-    SELECT HOUR(STR_TO_DATE(Time, '%H:%i')) AS Hour, SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Hour;
-    
-    
-    SELECT 
-        DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') AS Month, 
-        SUM(Total) AS Total_Sales, 
-        LAG(SUM(Total)) OVER (ORDER BY DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m')) AS Previous_Month_Sales,
-        (SUM(Total) - LAG(SUM(Total)) OVER (ORDER BY DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m'))) / LAG(SUM(Total)) OVER (ORDER BY DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m')) * 100 AS Sales_Growth_Percentage
-    FROM data
-    GROUP BY Month;
-    
-    SELECT 
-        DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') AS Month,
-        COUNT(DISTINCT CASE WHEN `Customer type` = 'Member' THEN `Invoice ID` END) AS Returning_Customers,
-        COUNT(DISTINCT `Invoice ID`) AS Total_Customers,
-        COUNT(DISTINCT CASE WHEN `Customer type` = 'Member' THEN `Invoice ID` END) / COUNT(DISTINCT `Invoice ID`) * 100 AS Retention_Rate
-    FROM data
-    GROUP BY Month;
-    
-    
-    SELECT 
-        `Customer type`, 
-        COUNT(`Invoice ID`) / COUNT(DISTINCT DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m-%d')) AS Avg_Purchase_Frequency
-    FROM data
-    GROUP BY `Customer type`;
-    
-    SELECT 
-        DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') AS Month,
-        SUM(Total) AS Total_Sales,
-        AVG(SUM(Total)) OVER (ORDER BY DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS Rolling_Avg_Sales_3_Months
-    FROM data
-    GROUP BY Month;
-    
-    
-    SELECT 
-        AVG((`Unit price` - (SELECT AVG(`Unit price`) FROM data)) * (Rating - (SELECT AVG(Rating) FROM data))) / 
-        (STDDEV_SAMP(`Unit price`) * STDDEV_SAMP(Rating)) AS Correlation
-    FROM data;
-    
-    SELECT 
-        `Invoice ID`, 
-        SUM(Total) AS Total_Spend
-    FROM data
-    GROUP BY `Invoice ID`
-    ORDER BY Total_Spend DESC
-    LIMIT 5;
-    
-    SELECT 
-        CASE
-            WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 0 AND 5 THEN 'Midnight - 6 AM'
-            WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 6 AND 11 THEN '6 AM - Noon'
-            WHEN HOUR(STR_TO_DATE(Time, '%H:%i')) BETWEEN 12 AND 17 THEN 'Noon - 6 PM'
-            ELSE '6 PM - Midnight'
-        END AS Time_Period,
-        SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Time_Period;
-    
-    SELECT 
-        DATE_FORMAT(STR_TO_DATE(Date, '%m/%d/%Y'), '%Y-%m') AS Month,
-        Gender,
-        SUM(Total) AS Total_Sales
-    FROM data
-    GROUP BY Month, Gender
-    ORDER BY Month, Gender;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+The comprehensive analysis of the retail sales dataset provided valuable insights into various aspects of the business. These findings can help strategic decision-making, improve operational efficiency, enhance customer satisfaction, and drive overall business growth. By leveraging these insights, the company can optimize its marketing efforts, inventory management, customer relationship management, and operational planning. Implementing these data-driven strategies will position the company for sustained growth and competitive advantage in the retail market.
