@@ -1,6 +1,6 @@
 # Analyzing Supermarket Sales using MySQL 👩🏻‍💻
 
-# Introduction
+# Introduction🕯️
 
 This project involved an in-depth analysis of sales data from a retail company. The dataset included various attributes such as Invoice ID, Branch, City, Customer type, Gender, Product line, Unit price, Quantity, Tax, Total, Date, Time, Payment method, cost of goods sold (COGS), gross margin percentage, gross income, and customer rating. Our objective was to derive meaningful insights that could help strategic decision-making and enhance business performance.
 
