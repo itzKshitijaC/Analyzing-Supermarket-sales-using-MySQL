@@ -2,19 +2,19 @@
 
 The dataset contains the following columns:
 
-Invoice ID
-Branch
-City
-Customer type
-Gender
-Product line
-Unit price
-Quantity
-Tax 5%
-Total
-Date
-Time
-Payment
+1. Invoice ID
+2. Branch
+3. City
+4. Customer type
+5. Gender
+6. Product line
+7. Unit price
+8. Quantity
+9. Tax 5%
+10. Total
+11. Date
+12. Time
+13. Payment
 
 # MySQL Queries (Basics + Advanced)👇🏻
 
